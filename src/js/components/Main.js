@@ -1,40 +1,39 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-import App from 'grommet/components/App';
-import Split from 'grommet/components/Split';
+import App from 'grommet/components/App'
+import Split from 'grommet/components/Split'
 
-import NavSidebar from './NavSidebar';
-import { navResponsive } from '../actions/nav';
+import NavSidebar from './NavSidebar'
+import { navResponsive } from '../actions/nav'
 
-import Login from '../screens/Login';
-import Dashboard from '../screens/Dashboard';
-import Tasks from '../screens/Tasks';
-import Task from '../screens/Task';
-import NotFound from '../screens/NotFound';
+import Login from '../screens/Login'
+import Dashboard from '../screens/Dashboard'
+import Tasks from '../screens/Tasks'
+import Task from '../screens/Task'
+import NotFound from '../screens/NotFound'
 
 class Main extends Component {
-
-  constructor() {
-    super();
-    this._onResponsive = this._onResponsive.bind(this);
+  constructor () {
+    super()
+    this._onResponsive = this._onResponsive.bind(this)
   }
 
-  _onResponsive(responsive) {
-    this.props.dispatch(navResponsive(responsive));
+  _onResponsive (responsive) {
+    this.props.dispatch(navResponsive(responsive))
   }
 
-  render() {
+  render () {
     const {
       nav: { active: navActive, enabled: navEnabled, responsive }
-    } = this.props;
-    const includeNav = (navActive && navEnabled);
-    let nav;
+    } = this.props
+    const includeNav = (navActive && navEnabled)
+    let nav
     if (includeNav) {
-      nav = <NavSidebar />;
+      nav = <NavSidebar />
     }
-    const priority = (includeNav && responsive === 'single' ? 'left' : 'right');
+    const priority = (includeNav && responsive === 'single' ? 'left' : 'right')
 
     return (
       <App centered={false}>
@@ -43,7 +42,7 @@ class Main extends Component {
             onResponsive={this._onResponsive}>
             {nav}
             <Switch>
-              <Route exact={true} path='/' component={Dashboard} />
+              <Route exact path='/' component={Dashboard} />
               <Route path='/dashboard' component={Dashboard} />
               <Route path='/login' component={Login} />
               <Route path='/tasks/:id' component={Task} />
@@ -53,7 +52,7 @@ class Main extends Component {
           </Split>
         </Router>
       </App>
-    );
+    )
   }
 }
 
@@ -64,10 +63,10 @@ Main.propTypes = {
     enabled: PropTypes.bool,
     responsive: PropTypes.string
   })
-};
+}
 
 const select = state => ({
   nav: state.nav
-});
+})
 
-export default connect(select)(Main);
+export default connect(select)(Main)
